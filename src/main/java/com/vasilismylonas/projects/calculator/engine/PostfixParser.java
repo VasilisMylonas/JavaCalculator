@@ -1,4 +1,4 @@
-package com.vasilismylonas.projects.calculator;
+package com.vasilismylonas.projects.calculator.engine;
 
 import java.util.Scanner;
 import java.util.Stack;
@@ -43,5 +43,9 @@ public class PostfixParser implements Parser {
         var result = Double.parseDouble(stack.peek());
         stack.clear();
         return result;
+    }
+
+    public CalculatorEngine getEngine() {
+        return engine;
     }
 }

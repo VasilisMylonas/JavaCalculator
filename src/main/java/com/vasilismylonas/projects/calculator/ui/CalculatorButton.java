@@ -4,14 +4,29 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CalculatorButton extends JButton {
-    private static final Color DEFAULT_COLOR = Color.WHITE;
-    private static final Color HOVER_COLOR = new Color(238, 238, 238);
-    private static final Color CLICK_COLOR = new Color(210, 210, 210);
+    public static CalculatorButton createWhiteButton(String text) {
+        return new CalculatorButton(text,
+                Color.WHITE,
+                new Color(238, 238, 238),
+                new Color(210, 210, 210)
+        );
+    }
 
-    public CalculatorButton(String text) {
+    public static CalculatorButton createRedButton(String text) {
+        var btn = new CalculatorButton(text,
+                new Color(255, 104, 104),
+                new Color(232, 90, 90),
+                new Color(206, 50, 50)
+        );
+
+        btn.setForeground(Color.WHITE);
+        return btn;
+    }
+
+    public CalculatorButton(String text, Color defaultColor, Color hoverColor, Color clickColor) {
         super(text);
 
-        setBackground(Color.WHITE);
+        setBackground(defaultColor);
         setBorder(BorderFactory.createEmptyBorder());
 
         setFocusPainted(false);
@@ -20,11 +35,11 @@ public class CalculatorButton extends JButton {
 
         addChangeListener(evt -> {
             if (getModel().isPressed()) {
-                setBackground(CLICK_COLOR);
+                setBackground(clickColor);
             } else if (getModel().isRollover()) {
-                setBackground(HOVER_COLOR);
+                setBackground(hoverColor);
             } else {
-                setBackground(DEFAULT_COLOR);
+                setBackground(defaultColor);
             }
         });
     }

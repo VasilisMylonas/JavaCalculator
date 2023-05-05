@@ -13,7 +13,7 @@ public class Numpad extends JPanel {
     };
     private ArrayList<ActionListener> listeners = new ArrayList<>();
     private void addButton(String symbol, GridBagConstraints gbc) {
-        var btn = new CalculatorButton(symbol);
+        var btn = CalculatorButton.createWhiteButton(symbol);
         btn.addActionListener(e -> {
             for (var listener : listeners) {
                 listener.actionPerformed(e);

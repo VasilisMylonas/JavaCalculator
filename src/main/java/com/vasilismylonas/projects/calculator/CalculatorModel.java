@@ -1,36 +1,23 @@
 package com.vasilismylonas.projects.calculator;
 
+import com.vasilismylonas.projects.calculator.engine.CalculatorEngine;
+import com.vasilismylonas.projects.calculator.engine.InfixParser;
+import com.vasilismylonas.projects.calculator.engine.Parser;
+
 public class CalculatorModel {
-    private Parser infixParser;
-    private Parser postfixParser;
-    private ParserMode parserMode = ParserMode.INFIX;
+    private Parser parser;
 
     public CalculatorModel(CalculatorEngine engine) {
-        infixParser = new InfixParser(engine);
-        postfixParser = new PostfixParser(engine);
+        parser = new InfixParser(engine);
     }
 
     private String tokenize(String expression) {
-        return expression;
-        // TODO
-//        var builder = new StringBuilder(expression.length());
-//
-//        builder.append(" ");
-//
-//        for (int i = 0; i < expression.length(); i++) {
-//            var c = expression.charAt(i);
-//            if (Character.isDigit(c) || c == '.') {
-//                builder.append(c);
-//            } else {
-//                builder.append(" ");
-//                builder.append(c);
-//                builder.append(" ");
-//            }
-//        }
-//
-//        builder.append(" ");
-//
-//        return builder.toString();
+        for (var operator: parser.getEngine().getOperators()) {
+            expression = expression.replace(operator, " " + operator + " ");
+        }
+
+        return expression.replace("(", " ( ")
+                .replace(")", " ) ");
     }
 
     public double eval(String expression) {
@@ -38,17 +25,6 @@ public class CalculatorModel {
     }
 
     public Parser getParser() {
-        return switch (parserMode) {
-            case INFIX -> infixParser;
-            case POSTFIX -> postfixParser;
-        };
-    }
-
-    public ParserMode getParserMode() {
-        return parserMode;
-    }
-
-    public void setParserMode(ParserMode parserMode) {
-        this.parserMode = parserMode;
+        return parser;
     }
 }

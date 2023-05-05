@@ -2,6 +2,7 @@ package com.vasilismylonas.projects.calculator.ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,9 +10,8 @@ import java.util.List;
 
 public class CalculatorView extends JFrame {
     private final Numpad numpad;
-    private final FunctionPad functionPad;
     private final JTextField display;
-    private final JButton enterButton, backspaceButton, parserModeButton;
+    private final JButton enterButton, backspaceButton;
     public void setDisplayText(String text) {
         display.setText(text);
     }
@@ -21,47 +21,52 @@ public class CalculatorView extends JFrame {
     public void addNumpadListener(ActionListener listener) {
         numpad.addActionListener(listener);
     }
-    public void addFunctionListener(ActionListener listener) {
-        functionPad.addActionListener(listener);
-    }
     public void addBackspaceListener(ActionListener listener) { backspaceButton.addActionListener(listener); }
     public void addEnterListener(ActionListener listener) {
         enterButton.addActionListener(listener);
     }
-    public void addParserModeListener(ActionListener listener) {
-        parserModeButton.addActionListener(listener);
-    }
 
-    public void setParserMode(String mode) {
-        parserModeButton.setText(mode);
-    }
-
-    public String getParserMode() {
-        return parserModeButton.getText();
-    }
-
-    public CalculatorView(Collection<String> functions) {
+    public CalculatorView() {
         setTitle("Calculator");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(500, 600));
+        setMinimumSize(new Dimension(400, 500));
 
         display = new JTextField("");
         display.setFont(new Font("Times New Roman", Font.PLAIN, 40));
         numpad = new Numpad();
-        enterButton = new CalculatorButton("ENTER");
-        backspaceButton = new CalculatorButton("BACKSPACE");
-        parserModeButton = new CalculatorButton("");
-        functionPad = new FunctionPad(functions);
+        enterButton = CalculatorButton.createRedButton("ENTER");
+        backspaceButton = CalculatorButton.createRedButton("BACKSPACE");
+
+        var gbc = new GridBagConstraints();
+        gbc.insets = new Insets(2, 2, 2, 2);
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
 
         var p = new JPanel();
-        p.setLayout(new GridLayout(1, 3));
-        p.add(backspaceButton);
-        p.add(enterButton);
+        p.setLayout(new GridBagLayout());
 
-        setLayout(new GridLayout(2, 2));
-        getContentPane().add(display);
-        getContentPane().add(p);
-        getContentPane().add(numpad);
-        getContentPane().add(functionPad);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        p.add(backspaceButton, gbc);
+        gbc.gridx++;
+        p.add(enterButton, gbc);
+
+        setLayout(new GridBagLayout());
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+
+        add(display, gbc);
+        gbc.gridy++;
+        gbc.weighty = 1;
+        add(p, gbc);
+        gbc.weighty = 8;
+        gbc.gridy++;
+        add(numpad, gbc);
     }
 }

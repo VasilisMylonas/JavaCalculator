@@ -1,4 +1,4 @@
-package com.vasilismylonas.projects.calculator;
+package com.vasilismylonas.projects.calculator.engine;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -86,6 +86,10 @@ public class InfixParser implements Parser {
 
     public double parse(String expression) {
         return parser.parse(toPostfix(expression));
+    }
+
+    public CalculatorEngine getEngine() {
+        return engine;
     }
 
     public InfixParser(CalculatorEngine engine) {
