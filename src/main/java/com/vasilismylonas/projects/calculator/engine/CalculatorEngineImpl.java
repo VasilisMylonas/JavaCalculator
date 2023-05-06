@@ -17,7 +17,6 @@ public class CalculatorEngineImpl implements CalculatorEngine {
             "abs", "sign",
             "deg", "fact",
             "floor", "ceil"
-            // TODO: more functions
     };
 
     private static final String[] specialNumbers = {
@@ -30,50 +29,47 @@ public class CalculatorEngineImpl implements CalculatorEngine {
             "^"
     };
 
-    private int factorial(int n) {
-        if (n == 0) {
+    private double factorial(double arg) {
+        if (Math.floor(arg) != arg || arg < 0) {
+            throw new ArithmeticException("Undefined factorial");
+        }
+
+        if (arg == 0) {
             return 1;
         }
 
-        return n * factorial(n - 1);
+        return arg * factorial(arg - 1);
     }
 
     @Override
-    public Function<Double, Double> getFunction(String name) {
-        return switch (name) {
+    public double evalFunction(String function, double arg) {
+        return switch (function) {
             // Trig functions
-            case "sin" -> Math::sin;
-            case "cos" -> Math::cos;
-            case "tan" -> Math::tan;
-            case "cot" -> (Double arg) -> 1 / Math.tan(arg);
-            case "sec" -> (Double arg) -> 1 / Math.cos(arg);
-            case "csc" -> (Double arg) -> 1 / Math.sin(arg);
-            case "arcsin" -> Math::asin;
-            case "arccos" -> Math::acos;
-            case "arctan" -> Math::atan;
-            case "arccot" -> (Double arg) -> 1 / Math.atan(arg);
-            case "arcsec" -> (Double arg) -> 1 / Math.acos(arg);
-            case "arccsc" -> (Double arg) -> 1 / Math.asin(arg);
+            case "sin" -> Math.sin(arg);
+            case "cos" -> Math.cos(arg);
+            case "tan" -> Math.tan(arg);
+            case "cot" -> 1 / Math.tan(arg);
+            case "sec" -> 1 / Math.cos(arg);
+            case "csc" -> 1 / Math.sin(arg);
+            case "arcsin" -> Math.asin(arg);
+            case "arccos" -> Math.acos(arg);
+            case "arctan" -> Math.atan(arg);
+            case "arccot" -> 1 / Math.atan(arg);
+            case "arcsec" -> 1 / Math.acos(arg);
+            case "arccsc" -> 1 / Math.asin(arg);
 
             // Common
-            case "sqrt" -> Math::sqrt;
-            case "cbrt" -> Math::cbrt;
-            case "log" -> Math::log;
-            case "abs" -> Math::abs;
-            case "sign" -> Math::signum;
-            case "exp" -> Math::exp;
-            case "deg" -> Math::toRadians;
-            case "floor" -> Math::floor;
-            case "ceil" -> Math::ceil;
-            case "fact" -> (Double arg) -> {
-                if (Math.floor(arg) == arg) {
-                    return Double.valueOf(factorial(arg.intValue()));
-                }
-
-                throw new ArithmeticException("Non-integer factorial cannot be computed.");
-            };
-
-            default -> throw new RuntimeException("?"); // TODO
+            case "sqrt" -> Math.sqrt(arg);
+            case "cbrt" -> Math.cbrt(arg);
+            case "log" -> Math.log(arg);
+            case "abs" -> Math.abs(arg);
+            case "sign" -> Math.signum(arg);
+            case "exp" -> Math.exp(arg);
+            case "deg" -> Math.toRadians(arg);
+            case "floor" -> Math.floor(arg);
+            case "ceil" -> Math.ceil(arg);
+            case "fact" -> factorial(arg);
+            default -> throw new IllegalArgumentException(function);
         };
     }
 
@@ -83,9 +79,7 @@ public class CalculatorEngineImpl implements CalculatorEngine {
             case "^" -> 2;
             case "*", "/" -> 1;
             case "+", "-" -> 0;
-            default ->
-                // TODO
-                    throw new RuntimeException("?");
+            default -> throw new IllegalArgumentException(operator);
         };
     }
 
@@ -100,6 +94,18 @@ public class CalculatorEngineImpl implements CalculatorEngine {
         }
 
         return Double.parseDouble(name);
+    }
+
+    @Override
+    public double evalOperator(String operator, double a, double b) {
+        return switch (operator) {
+            case "+" -> a + b;
+            case "-" -> a - b;
+            case "*" -> a * b;
+            case "/" -> a / b;
+            case "^" -> Math.pow(a, b);
+            default -> throw new IllegalArgumentException(operator);
+        };
     }
 
     @Override

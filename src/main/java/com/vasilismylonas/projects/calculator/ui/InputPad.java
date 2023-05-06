@@ -20,13 +20,6 @@ public class InputPad extends JPanel {
 
         for (String[] row : symbols) {
             for (String symbol : row) {
-                gbc.gridwidth = 1;
-
-                // TODO
-//                if (symbol.equals("0")) {
-//                    gbc.gridwidth = 2;
-//                }
-
                 var btn = new InputButton(symbol);
                 btn.addActionListener(listener);
                 add(btn, gbc);

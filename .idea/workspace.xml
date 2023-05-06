@@ -7,13 +7,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1b14076-29d7-4574-a730-55aa2312bdb7" name="Changes" comment="Added Advanced mode">
+    <list default="true" id="d1b14076-29d7-4574-a730-55aa2312bdb7" name="Changes" comment="Added more functions + special number support">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/SyntaxException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/CalculatorGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/CalculatorGui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/CalculatorEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/CalculatorEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/CalculatorEngineImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/CalculatorEngineImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/InfixParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/InfixParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/PostfixParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/PostfixParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/CalculatorView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/CalculatorView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/InputPad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/InputPad.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +37,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2PHUT37a0oOA0uNi9yKNstH3OuG" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -97,7 +102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683392013370</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added more functions + special number support">
+      <created>1683394717664</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1683394717664</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,6 +129,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="UI code refactoring" />
     <MESSAGE value="Added Advanced mode" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Advanced mode" />
+    <MESSAGE value="Added more functions + special number support" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added more functions + special number support" />
   </component>
 </project>

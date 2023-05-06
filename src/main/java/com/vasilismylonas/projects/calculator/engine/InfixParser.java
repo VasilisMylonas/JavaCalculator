@@ -4,52 +4,43 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class InfixParser implements Parser {
+public class InfixParser extends PostfixParser {
     private final Queue<String> output = new ArrayDeque<>();
     private final ArrayDeque<String> operators = new ArrayDeque<>();
-    private final CalculatorEngine engine;
-    private final PostfixParser parser;
 
     private boolean isMoreImportant(String o1, String o2) {
-        return engine.getPriority(o2) > engine.getPriority(o1) ||
-                (engine.getPriority(o2) == engine.getPriority(o1) && engine.isAssociative(o1));
+        return getEngine().getPriority(o2) > getEngine().getPriority(o1) ||
+                (getEngine().getPriority(o2) == getEngine().getPriority(o1) && getEngine().isAssociative(o1));
     }
 
-    private void processToken(String token) {
-        if (engine.isNumber(token)) {
+    private void processToken(String token) throws SyntaxException {
+        if (getEngine().isNumber(token)) {
             output.add(token);
-        } else if (engine.isFunction(token)) {
+        } else if (getEngine().isFunction(token)) {
             operators.push(token);
-        } else if (engine.isOperator(token)) {
-            // TODO: This part is a bit weird
-            var o2 = operators.peek();
-            while (o2 != null && !o2.equals("(") && isMoreImportant(token, o2)) {
+        } else if (getEngine().isOperator(token)) {
+            while (!operators.isEmpty() && !operators.peek().equals("(") && isMoreImportant(token, operators.peek())) {
                 output.add(operators.pop());
-                o2 = operators.peek();
             }
             operators.push(token);
-            //} else if (token == ",") { TODO?
         } else if (token.equals("(")) {
             operators.push(token);
         } else if (token.equals(")")) {
-            try {
-                while (!operators.peek().equals("(")) {
-                    output.add(operators.pop());
-                }
-            } catch (/*EmptyStackException ex*/ NullPointerException ex2) {
-                throw new RuntimeException("MISMATCHED PARENTHESIS!");
+            while (!operators.isEmpty() && !operators.peek().equals("(")) {
+                output.add(operators.pop());
             }
-//            if (!operators.peek().equals("(")) {
-//                throw new RuntimeException("NO (");
-//            } TODO
+
+            if (operators.isEmpty() || !operators.peek().equals("(")) {
+                throw new SyntaxException("Expected (");
+            }
 
             operators.pop(); // Discard matching (
 
-            if (engine.isFunction(operators.peek())) {
+            if (getEngine().isFunction(operators.peek())) {
                 output.add(operators.pop());
             }
-        } else {
-            throw new RuntimeException("Unknown token: " + token);
+        } else if (!token.equals(",")) {
+            throw new SyntaxException("Unexpected: " + token);
         }
     }
 
@@ -64,7 +55,10 @@ public class InfixParser implements Parser {
         return builder.toString();
     }
 
-    private String toPostfix(String expression) {
+    private String toPostfix(String expression) throws SyntaxException {
+        output.clear();
+        operators.clear();
+
         var sc = new Scanner(expression);
 
         while (sc.hasNext()) {
@@ -73,27 +67,19 @@ public class InfixParser implements Parser {
 
         while (!operators.isEmpty()) {
             if (operators.peek().equals(")")) {
-                throw new RuntimeException("IS )");
+                throw new SyntaxException("Unexpected )");
             }
             output.add(operators.pop());
         }
 
-        var s = queueToString(output);
-        output.clear();
-        operators.clear();
-        return s;
+        return queueToString(output);
     }
 
-    public double parse(String expression) {
-        return parser.parse(toPostfix(expression));
-    }
-
-    public CalculatorEngine getEngine() {
-        return engine;
+    public double parse(String expression) throws SyntaxException {
+        return super.parse(toPostfix(tokenize(expression)));
     }
 
     public InfixParser(CalculatorEngine engine) {
-        this.engine = engine;
-        this.parser = new PostfixParser(engine);
+        super(engine);
     }
 }

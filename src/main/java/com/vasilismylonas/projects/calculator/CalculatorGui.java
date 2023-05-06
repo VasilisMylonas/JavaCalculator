@@ -3,6 +3,7 @@ package com.vasilismylonas.projects.calculator;
 import com.vasilismylonas.projects.calculator.engine.CalculatorEngineImpl;
 import com.vasilismylonas.projects.calculator.engine.InfixParser;
 import com.vasilismylonas.projects.calculator.engine.Parser;
+import com.vasilismylonas.projects.calculator.engine.SyntaxException;
 import com.vasilismylonas.projects.calculator.ui.CalculatorView;
 
 import java.awt.*;
@@ -13,15 +14,6 @@ public class CalculatorGui {
     private final CalculatorView view;
     private final Parser parser;
     private final HashMap<Integer, Runnable> keyMap = new HashMap<>();
-
-    private String tokenize(String expression) {
-        for (var operator: parser.getEngine().getOperators()) {
-            expression = expression.replace(operator, " " + operator + " ");
-        }
-
-        return expression.replace("(", " ( ")
-                .replace(")", " ) ");
-    }
 
     private boolean handleKeyEvent(KeyEvent e) {
         int key = e.getKeyCode();
@@ -53,10 +45,17 @@ public class CalculatorGui {
         String text;
 
         try {
-            var result = parser.parse(tokenize(expr));
+            var result = parser.parse(expr);
             text = String.format("%.8f", result);
-        } catch (Exception e) {
-            text = e.getMessage();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+            text = "UNKNOWN: " + e.getMessage();
+        } catch (ArithmeticException e) {
+            System.out.println(e);
+            text = "ERROR";
+        } catch (SyntaxException e) {
+            System.out.println(e);
+            text = "SYNTAX ERROR";
         }
 
         view.setDisplayText(text);

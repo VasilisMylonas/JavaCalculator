@@ -10,7 +10,8 @@ public interface CalculatorEngine {
     boolean isFunction(String token);
     boolean isOperator(String token);
     boolean isNumber(String token);
-    Function<Double, Double> getFunction(String name);
+    double evalFunction(String function, double arg);
+    double evalOperator(String operator, double a, double b);
 
     Collection<String> getOperators();
     Collection<String> getFunctions();

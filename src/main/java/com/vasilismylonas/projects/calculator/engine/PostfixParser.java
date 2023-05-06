@@ -1,52 +1,45 @@
 package com.vasilismylonas.projects.calculator.engine;
 
+import java.util.EmptyStackException;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class PostfixParser implements Parser {
+public class PostfixParser extends Parser {
     private final Stack<Double> stack = new Stack<>();
-    private final CalculatorEngine engine;
 
     public PostfixParser(CalculatorEngine engine) {
-        this.engine = engine;
+        super(engine);
     }
 
-    public double parse(String expression) {
-        var sc = new Scanner(expression);
+    private void processToken(String token) throws SyntaxException {
+        if (getEngine().isNumber(token)) {
+            stack.push(getEngine().getNumber(token));
+        } else if (getEngine().isFunction(token)) {
+            var arg = stack.pop();
+            stack.push(getEngine().evalFunction(token, arg));
+        } else if (getEngine().isOperator(token)) {
+            // TODO: expressions like 5 * (-5) or () will throw EmptyStackException here
+            var a = stack.pop();
+            var b = stack.pop();
+            stack.push(getEngine().evalOperator(token, b, a));
+        } else {
+            throw new SyntaxException("Unexpected " + token);
+        }
+    }
 
-        while (sc.hasNext()) {
-            var token = sc.next();
-            if (engine.isNumber(token)) {
-                stack.push(engine.getNumber(token));
-            } else {
-                if (engine.isFunction(token)) {
-                    var arg = stack.pop();
-                    var fn = engine.getFunction(token);
-                    stack.push(fn.apply(arg));
-                } else {
-                    // TODO
-                    var a = stack.pop();
-                    var b = stack.pop();
-                    stack.push(
-                            switch (token) {
-                                case "+" -> b + a;
-                                case "-" -> b - a;
-                                case "*" -> b * a;
-                                case "/" -> b / a;
-                                case "^" -> Math.pow(b, a);
-                                default -> throw new  RuntimeException("?"); // TODO
-                            }
-                    );
-                }
+    public double parse(String expression) throws SyntaxException {
+        stack.clear();
+
+        var sc = new Scanner(tokenize(expression));
+
+        try {
+            while (sc.hasNext()) {
+                processToken(sc.next());
             }
+        } catch (EmptyStackException e) {
+            throw new SyntaxException("Premature end-of-stack");
         }
 
-        var result = stack.peek();
-        stack.clear();
-        return result;
-    }
-
-    public CalculatorEngine getEngine() {
-        return engine;
+        return stack.peek();
     }
 }
