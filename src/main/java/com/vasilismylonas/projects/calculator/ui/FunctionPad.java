@@ -14,7 +14,7 @@ public class FunctionPad extends JPanel {
     }
 
     private void addButton(String symbol, GridBagConstraints gbc) {
-        var btn = CalculatorButton.createWhiteButton(symbol);
+        var btn = new InputButton(symbol);
         btn.addActionListener(e -> {
             for (var listener : listeners) {
                 listener.actionPerformed(e);
