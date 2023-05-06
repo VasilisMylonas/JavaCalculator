@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.function.Function;
 
 public class CalculatorEngineImpl implements CalculatorEngine {
-    private static String[] knownFunctions = {
+    private static final String[] knownFunctions = {
             "sin", "cos",
             "tan", "cot",
             "sec", "csc",
@@ -13,13 +13,13 @@ public class CalculatorEngineImpl implements CalculatorEngine {
             "arctan", "arccot",
             "arcsec", "arccsc",
             "sqrt", "cbrt",
-            "ln", "log",
+            "log", "exp",
             "abs", "sign",
-            "exp",
+            "deg",
             // TODO: more functions
     };
 
-    private static String[] knownOperators = {
+    private static final String[] knownOperators = {
             "+", "-",
             "*", "/",
     };
@@ -44,11 +44,11 @@ public class CalculatorEngineImpl implements CalculatorEngine {
             // Common
             case "sqrt" -> Math::sqrt;
             case "cbrt" -> Math::cbrt;
-            case "ln" -> Math::log;
-            case "log" -> Math::log10;
+            case "log" -> Math::log;
             case "abs" -> Math::abs;
             case "sign" -> Math::signum;
             case "exp" -> Math::exp;
+            case "deg" -> Math::toRadians;
 
             default -> throw new RuntimeException("?"); // TODO
         };

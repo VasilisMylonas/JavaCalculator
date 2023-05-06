@@ -72,7 +72,7 @@ public class InfixParser implements Parser {
         }
 
         while (!operators.isEmpty()) {
-            if (operators.peek().equals("(")) {
+            if (operators.peek().equals(")")) {
                 throw new RuntimeException("IS )");
             }
             output.add(operators.pop());

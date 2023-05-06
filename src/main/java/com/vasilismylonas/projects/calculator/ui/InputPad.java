@@ -5,20 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class InputPad extends JPanel {
-    private static final String[][] symbols = {
-            {"7", "8", "9", "+"},
-            {"4", "5", "6", "-"},
-            {"1", "2", "3", "*"},
-            {"0", ".", "/"},
-    };
-
-    private final CallbackActionListener listener = new CallbackActionListener();
+     private final CallbackActionListener listener = new CallbackActionListener();
 
     public void onInput(ActionListener listener) {
         this.listener.setListener(listener);
     }
 
-    public InputPad() {
+    public InputPad(String[][] symbols) {
         super();
 
         setLayout(new GridBagLayout());

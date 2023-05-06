@@ -4,19 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1b14076-29d7-4574-a730-55aa2312bdb7" name="Changes" comment="UI code refactoring">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/CallbackActionListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/ControlButton.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/ControlPad.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/Display.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/InputButton.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/MyGridBagConstraints.java" afterDir="false" />
+    <list default="true" id="d1b14076-29d7-4574-a730-55aa2312bdb7" name="Changes" comment="Added Advanced mode">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/CalculatorPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/CalculatorPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/CalculatorModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/CalculatorPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/CalculatorGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/CalculatorEngineImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/CalculatorEngineImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/InfixParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/engine/InfixParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/CalculatorButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/CalculatorButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/CalculatorView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/CalculatorView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/FunctionPad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/FunctionPad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/Numpad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/InputPad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/ControlPad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/ControlPad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/FunctionPad.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/InputPad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vasilismylonas/projects/calculator/ui/InputPad.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +82,14 @@
       <workItem from="1683279227144" duration="2700000" />
       <workItem from="1683286916452" duration="2068000" />
     </task>
+    <task id="LOCAL-00001" summary="UI code refactoring">
+      <created>1683375657641</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1683375657641</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -102,6 +108,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="UI code refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI code refactoring" />
+    <MESSAGE value="Added Advanced mode" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Advanced mode" />
   </component>
 </project>
