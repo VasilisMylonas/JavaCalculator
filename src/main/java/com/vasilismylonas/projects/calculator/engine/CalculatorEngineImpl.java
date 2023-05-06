@@ -15,14 +15,28 @@ public class CalculatorEngineImpl implements CalculatorEngine {
             "sqrt", "cbrt",
             "log", "exp",
             "abs", "sign",
-            "deg",
+            "deg", "fact",
+            "floor", "ceil"
             // TODO: more functions
+    };
+
+    private static final String[] specialNumbers = {
+            "π", "e"
     };
 
     private static final String[] knownOperators = {
             "+", "-",
             "*", "/",
+            "^"
     };
+
+    private int factorial(int n) {
+        if (n == 0) {
+            return 1;
+        }
+
+        return n * factorial(n - 1);
+    }
 
     @Override
     public Function<Double, Double> getFunction(String name) {
@@ -49,6 +63,15 @@ public class CalculatorEngineImpl implements CalculatorEngine {
             case "sign" -> Math::signum;
             case "exp" -> Math::exp;
             case "deg" -> Math::toRadians;
+            case "floor" -> Math::floor;
+            case "ceil" -> Math::ceil;
+            case "fact" -> (Double arg) -> {
+                if (Math.floor(arg) == arg) {
+                    return Double.valueOf(factorial(arg.intValue()));
+                }
+
+                throw new ArithmeticException("Non-integer factorial cannot be computed.");
+            };
 
             default -> throw new RuntimeException("?"); // TODO
         };
@@ -57,6 +80,7 @@ public class CalculatorEngineImpl implements CalculatorEngine {
     @Override
     public int getPriority(String operator) {
         return switch (operator) {
+            case "^" -> 2;
             case "*", "/" -> 1;
             case "+", "-" -> 0;
             default ->
@@ -66,8 +90,21 @@ public class CalculatorEngineImpl implements CalculatorEngine {
     }
 
     @Override
+    public double getNumber(String name) {
+        if (name.equals("π")) {
+            return Math.PI;
+        }
+
+        if (name.equals("e")) {
+            return Math.E;
+        }
+
+        return Double.parseDouble(name);
+    }
+
+    @Override
     public boolean isAssociative(String operator) {
-        return operator.equals("*") || operator.equals("-");
+        return operator.equals("*") || operator.equals("+");
     }
 
     @Override
@@ -86,7 +123,7 @@ public class CalculatorEngineImpl implements CalculatorEngine {
             Double.parseDouble(token);
             return true;
         } catch (NumberFormatException ex) {
-            return false;
+            return Arrays.asList(specialNumbers).contains(token);
         }
     }
 

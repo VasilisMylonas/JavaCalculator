@@ -8,17 +8,18 @@ import java.util.function.Consumer;
 
 public class CalculatorView extends JFrame {
     private static final String[][] basicSymbols = {
-            {"7", "8", "9", "+"},
-            {"4", "5", "6", "-"},
-            {"1", "2", "3", "*"},
-            {"0", ".", "/"},
+            {"7", "8", "9", "+", "("},
+            {"4", "5", "6", "-", ")"},
+            {"1", "2", "3", "*", "π"},
+            {"0", ".", "^", "/", "e"},
     };
 
     private static final String[][] advancedSymbols = {
             {"sin", "cos", "tan", "sqrt", "abs"},
             {"sec", "csc", "cot", "cbrt", "sign"},
             {"arcsin", "arccos", "arctan", "log", "deg"},
-            {"arcsec", "arccsc", "arccot", "exp"},
+            {"arcsec", "arccsc", "arccot", "exp", "fact"},
+            {"floor", "ceil"}
     };
 
     private final InputPad basicPad = new InputPad(basicSymbols);

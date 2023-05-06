@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.function.Function;
 
 public interface CalculatorEngine {
+    double getNumber(String name);
     int getPriority(String operator);
     boolean isAssociative(String operator);
     boolean isFunction(String token);

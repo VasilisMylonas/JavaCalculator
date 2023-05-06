@@ -12,7 +12,7 @@ public class InfixParser implements Parser {
 
     private boolean isMoreImportant(String o1, String o2) {
         return engine.getPriority(o2) > engine.getPriority(o1) ||
-                (engine.getPriority(o2) == engine.getPriority(o1) && !engine.isAssociative(o1));
+                (engine.getPriority(o2) == engine.getPriority(o1) && engine.isAssociative(o1));
     }
 
     private void processToken(String token) {

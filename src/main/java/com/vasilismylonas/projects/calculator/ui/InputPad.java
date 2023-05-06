@@ -22,9 +22,10 @@ public class InputPad extends JPanel {
             for (String symbol : row) {
                 gbc.gridwidth = 1;
 
-                if (symbol.equals("0")) {
-                    gbc.gridwidth = 2;
-                }
+                // TODO
+//                if (symbol.equals("0")) {
+//                    gbc.gridwidth = 2;
+//                }
 
                 var btn = new InputButton(symbol);
                 btn.addActionListener(listener);

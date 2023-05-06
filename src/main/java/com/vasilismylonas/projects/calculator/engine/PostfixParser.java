@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class PostfixParser implements Parser {
-    private final Stack<String> stack = new Stack<>();
+    private final Stack<Double> stack = new Stack<>();
     private final CalculatorEngine engine;
 
     public PostfixParser(CalculatorEngine engine) {
@@ -17,30 +17,31 @@ public class PostfixParser implements Parser {
         while (sc.hasNext()) {
             var token = sc.next();
             if (engine.isNumber(token)) {
-                stack.push(token);
+                stack.push(engine.getNumber(token));
             } else {
                 if (engine.isFunction(token)) {
-                    var arg = Double.parseDouble(stack.pop());
+                    var arg = stack.pop();
                     var fn = engine.getFunction(token);
-                    stack.push(String.valueOf(fn.apply(arg)));
+                    stack.push(fn.apply(arg));
                 } else {
                     // TODO
-                    var a = Double.parseDouble(stack.pop());
-                    var b = Double.parseDouble(stack.pop());
-                    stack.push(String.valueOf(
+                    var a = stack.pop();
+                    var b = stack.pop();
+                    stack.push(
                             switch (token) {
                                 case "+" -> b + a;
                                 case "-" -> b - a;
                                 case "*" -> b * a;
                                 case "/" -> b / a;
-                                default -> throw new RuntimeException("?"); // TODO
+                                case "^" -> Math.pow(b, a);
+                                default -> throw new  RuntimeException("?"); // TODO
                             }
-                    ));
+                    );
                 }
             }
         }
 
-        var result = Double.parseDouble(stack.peek());
+        var result = stack.peek();
         stack.clear();
         return result;
     }
