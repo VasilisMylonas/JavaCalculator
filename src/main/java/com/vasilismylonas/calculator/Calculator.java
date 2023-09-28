@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
-public class CalculatorGui {
+public class Calculator {
   private final CalculatorView view;
   private final Parser parser;
   private final HashMap<Integer, Runnable> keyMap = new HashMap<>();
@@ -23,12 +23,11 @@ public class CalculatorGui {
     return false;
   }
 
-  public CalculatorGui(CalculatorView view, Parser parser) {
+  public Calculator(CalculatorView view, Parser parser) {
     this.view = view;
     this.parser = parser;
 
-    KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(
-        this::handleKeyEvent);
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this::handleKeyEvent);
 
     view.onEnter(this::onEnter);
     view.onBackspace(this::onBackspace);
@@ -37,7 +36,7 @@ public class CalculatorGui {
     view.onInput(this::onInput);
     keyMap.put(KeyEvent.VK_ENTER, this::onEnter);
     // TODO: problems with display
-    //        keyMap.put(KeyEvent.VK_BACK_SPACE, this::onBackspace);
+    keyMap.put(KeyEvent.VK_BACK_SPACE, this::onBackspace);
   }
 
   private void onEnter() {
@@ -69,7 +68,9 @@ public class CalculatorGui {
     }
   }
 
-  private void onClear() { view.setDisplayText(""); }
+  private void onClear() {
+    view.setDisplayText("");
+  }
 
   private void onClearEntry() {
     // TODO
@@ -84,7 +85,7 @@ public class CalculatorGui {
     var engine = new CalculatorEngineImpl();
     var parser = new InfixParser(engine);
     var view = new CalculatorView();
-    var presenter = new CalculatorGui(view, parser);
+    var presenter = new Calculator(view, parser);
     view.setVisible(true);
   }
 }

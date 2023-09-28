@@ -5,29 +5,38 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class InputPad extends JPanel {
-  private final CallbackActionListener listener = new CallbackActionListener();
+    private final CallbackActionListener listener = new CallbackActionListener();
 
-  public void onInput(ActionListener listener) {
-    this.listener.setListener(listener);
-  }
+    private static final String[][] basicSymbols = {
+            { "7", "8", "9", "+", "(" },
+            { "4", "5", "6", "-", ")" },
+            { "1", "2", "3", "*", "π" },
+            { "0", ".", "^", "/", "e" },
+    };
 
-  public InputPad(String[][] symbols) {
-    super();
+    private static final String[][] advancedSymbols = {
+            { "sin", "cos", "tan", "sqrt", "abs" },
+            { "sec", "csc", "cot", "cbrt", "sign" },
+            { "arcsin", "arccos", "arctan", "log", "deg" },
+            { "arcsec", "arccsc", "arccot", "exp", "fact" },
+            { "floor", "ceil" },
+    };
 
-    setLayout(new GridBagLayout());
-
-    var gbc = new MyGridBagConstraints();
-
-    for (String[] row : symbols) {
-      for (String symbol : row) {
-        var btn = new InputButton(symbol);
-        btn.addActionListener(listener);
-        add(btn, gbc);
-        gbc.gridx += gbc.gridwidth;
-      }
-
-      gbc.gridx = 1;
-      gbc.gridy++;
+    public void onInput(ActionListener listener) {
+        this.listener.setListener(listener);
     }
-  }
+
+    public InputPad() {
+        super();
+
+        setLayout(new GridLayout(4, 4, 0, 0));
+
+        for (String[] row : basicSymbols) {
+            for (String symbol : row) {
+                add(new InputButton(symbol));
+            }
+        }
+
+        setLayout(new GridBagLayout());
+    }
 }
