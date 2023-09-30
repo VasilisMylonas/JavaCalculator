@@ -2,35 +2,34 @@ package com.vasilismylonas.calculator.engine;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.function.Function;
 
 public class CalculatorEngineImpl implements CalculatorEngine {
-  private static final String[] knownFunctions = {
-      "sin",    "cos",    "tan",    "cot",    "sec",    "csc",
-      "arcsin", "arccos", "arctan", "arccot", "arcsec", "arccsc",
-      "sqrt",   "cbrt",   "log",    "exp",    "abs",    "sign",
-      "deg",    "fact",   "floor",  "ceil"};
+    private static final String[] knownFunctions = {
+            "sin", "cos", "tan", "cot", "sec", "csc",
+            "arcsin", "arccos", "arctan", "arccot", "arcsec", "arccsc",
+            "sqrt", "cbrt", "log", "exp", "abs", "sign",
+            "deg", "fact", "floor", "ceil" };
 
-  private static final String[] specialNumbers = {"π", "e"};
+    private static final String[] specialNumbers = { "π", "e" };
 
-  private static final String[] knownOperators = {"+", "-", "*", "/", "^"};
+    private static final String[] knownOperators = { "+", "-", "*", "/", "^" };
 
-  private double factorial(double arg) {
-    if (Math.floor(arg) != arg || arg < 0) {
-      throw new ArithmeticException("Undefined factorial");
+    private double factorial(double arg) {
+        if (Math.floor(arg) != arg || arg < 0) {
+            throw new ArithmeticException("Undefined factorial");
+        }
+
+        if (arg == 0) {
+            return 1;
+        }
+
+        return arg * factorial(arg - 1);
     }
 
-    if (arg == 0) {
-      return 1;
-    }
-
-    return arg * factorial(arg - 1);
-  }
-
-  @Override
-  public double evalFunction(String function, double arg) {
-    return switch (function) {
-    // Trig functions
+    @Override
+    public double evalFunction(String function, double arg) {
+        return switch (function) {
+            // Trig functions
             case "sin" -> Math.sin(arg);
             case "cos" -> Math.cos(arg);
             case "tan" -> Math.tan(arg);

@@ -6,7 +6,8 @@ import javax.swing.*;
 public class Display extends JTextField {
   public Display() {
     super("");
-    var font = getFont().deriveFont(Font.PLAIN, 20);
+    var font = getFont().deriveFont(Font.PLAIN, 32);
     setFont(font);
+    setBorder(BorderFactory.createLineBorder(Color.WHITE, 2, false));
   }
 }

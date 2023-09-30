@@ -10,82 +10,76 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 public class Calculator {
-  private final CalculatorView view;
-  private final Parser parser;
-  private final HashMap<Integer, Runnable> keyMap = new HashMap<>();
+    private final CalculatorView view;
+    private final Parser parser;
+    private final HashMap<Integer, Runnable> keyMap = new HashMap<>();
 
-  private boolean handleKeyEvent(KeyEvent e) {
-    int key = e.getKeyCode();
-    if (e.getID() == KeyEvent.KEY_PRESSED && keyMap.containsKey(key)) {
-      keyMap.get(key).run();
-      return true;
-    }
-    return false;
-  }
-
-  public Calculator(CalculatorView view, Parser parser) {
-    this.view = view;
-    this.parser = parser;
-
-    KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this::handleKeyEvent);
-
-    view.onEnter(this::onEnter);
-    view.onBackspace(this::onBackspace);
-    view.onClear(this::onClear);
-    view.onClearEntry(this::onClearEntry);
-    view.onInput(this::onInput);
-    keyMap.put(KeyEvent.VK_ENTER, this::onEnter);
-    // TODO: problems with display
-    keyMap.put(KeyEvent.VK_BACK_SPACE, this::onBackspace);
-  }
-
-  private void onEnter() {
-    var expr = view.getDisplayText();
-    String text;
-
-    try {
-      var result = parser.parse(expr);
-      text = String.format("%.8f", result);
-    } catch (IllegalArgumentException e) {
-      System.out.println(e);
-      text = "UNKNOWN: " + e.getMessage();
-    } catch (ArithmeticException e) {
-      System.out.println(e);
-      text = "ERROR";
-    } catch (SyntaxException e) {
-      System.out.println(e);
-      text = "SYNTAX ERROR";
+    private boolean handleKeyEvent(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (e.getID() == KeyEvent.KEY_PRESSED && keyMap.containsKey(key)) {
+            keyMap.get(key).run();
+            return true;
+        }
+        return false;
     }
 
-    view.setDisplayText(text);
-  }
+    public Calculator(CalculatorView view, Parser parser) {
+        this.view = view;
+        this.parser = parser;
 
-  private void onBackspace() {
-    var text = view.getDisplayText();
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this::handleKeyEvent);
 
-    if (text.length() > 0) {
-      view.setDisplayText(text.substring(0, text.length() - 1));
+        view.onEnter(this::onEnter);
+        view.onClear(this::onClear);
+        view.onClearEntry(this::onClearEntry);
+        view.onInput(this::onInput);
+        keyMap.put(KeyEvent.VK_ENTER, this::onEnter);
+        // TODO: problems with display
+        keyMap.put(KeyEvent.VK_BACK_SPACE, this::onClearEntry);
     }
-  }
 
-  private void onClear() {
-    view.setDisplayText("");
-  }
+    private void onEnter() {
+        var expr = view.getDisplayText();
+        String text;
 
-  private void onClearEntry() {
-    // TODO
-    System.out.println("CLEAR ENTRY NOT IMPLEMENTED!");
-  }
+        try {
+            var result = parser.parse(expr);
+            text = String.format("%.8f", result);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+            text = "UNKNOWN: " + e.getMessage();
+        } catch (ArithmeticException e) {
+            System.out.println(e);
+            text = "ERROR";
+        } catch (SyntaxException e) {
+            System.out.println(e);
+            text = "SYNTAX ERROR";
+        }
 
-  private void onInput(String input) {
-    view.setDisplayText(view.getDisplayText() + input);
-  }
+        view.setDisplayText(text);
+    }
 
-  public static void main(String[] args) {
-    var engine = new CalculatorEngineImpl();
-    var parser = new InfixParser(engine);
-    var view = new CalculatorView();
-    var presenter = new Calculator(view, parser);
-    view.setVisible(true);
-  }
+    private void onClear() {
+        view.setDisplayText("");
+    }
+
+    private void onClearEntry() {
+        var text = view.getDisplayText();
+        var len = text.length();
+        if (len > 0) {
+            view.setDisplayText(text.substring(0, text.length() - 1));
+        }
+    }
+
+    private void onInput(String input) {
+        view.setDisplayText(view.getDisplayText() + input);
+    }
+
+    public static void main(String[] args) {
+        var engine = new CalculatorEngineImpl();
+        var parser = new InfixParser(engine);
+        var view = new CalculatorView();
+        var presenter = new Calculator(view, parser);
+        view.setVisible(true);
+    }
 }
